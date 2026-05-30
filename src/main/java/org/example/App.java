@@ -1,7 +1,5 @@
 package org.example;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,13 +13,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class App {
 
-    /** Путь к chromedriver.exe в файловой системе. */
     static final String DRIVER_PATH = "E:\\proga\\ST-7\\chromedriver-win64\\chromedriver.exe";
 
-    /** Путь к браузеру Chrome for Testing. */
     static final String CHROME_BINARY = "E:\\proga\\ST-7\\chrome-win64\\chrome.exe";
 
-    /** Создаёт настроенный экземпляр ChromeDriver. */
     static WebDriver createDriver() {
         System.setProperty("webdriver.chrome.driver", DRIVER_PATH);
         ChromeOptions options = new ChromeOptions();
@@ -35,13 +30,11 @@ public class App {
             // ===== Задание №1 =====
             webDriver.get("https://www.calculator.net/password-generator.html");
 
-            // Пароли генерируются JS-ом в <div id="resultid"> после загрузки страницы.
-            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
+            WebDriverWait wait = new WebDriverWait(webDriver, 15);
             WebElement result = wait.until(
                     ExpectedConditions.presenceOfElementLocated(By.id("resultid")));
             wait.until(d -> !result.getText().trim().isEmpty());
 
-            // Внутри блока результата сам пароль выводится жирным (<b>).
             String password;
             try {
                 password = result.findElement(By.tagName("b")).getText().trim();
